@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!-- android:background="?attr/colorPrimaryDark"-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="?attr/colorPrimaryDark"
+    android:gravity="center_vertical"
+    android:paddingLeft="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/icon"
+        android:layout_alignBottom="@+id/id_link"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_toRightOf="@id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:id="@+id/id_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="Rita 2015"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/navigation_header_setting"
+        android:id="@+id/header_iv"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="62dp" />
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:text="Home"
+        android:id="@+id/button"
+        android:layout_below="@+id/header_iv"
+        android:layout_toLeftOf="@+id/header_iv"
+        android:layout_toStartOf="@+id/header_iv" />
+
+    <TextView
+        android:id="@+id/id_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="Log out"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignStart="@+id/relativeLayout" />
+</RelativeLayout>
