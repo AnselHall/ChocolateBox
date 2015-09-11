@@ -16,6 +16,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Beijign"
+        android:text="Beijing"
         android:drawableRight="@mipmap/find_city_down"/>
 </LinearLayout>

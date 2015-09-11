@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.laibatour.chocolatebox.R;
 import com.laibatour.chocolatebox.constant.ImageUrl;
@@ -41,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout main_ll_dots;
     private ViewPager main_vp;
 
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            main_vp.setCurrentItem(main_vp.getCurrentItem() + 1,true);
-            handler.sendEmptyMessageDelayed(0,5000);
+            main_vp.setCurrentItem(main_vp.getCurrentItem() + 1, true);
+            handler.sendEmptyMessageDelayed(0, 5000);
         }
     };
+    private long firstTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         initViewPager();
     }
+    public void test(View view){
+        startActivity(new Intent(this, TestActivity.class));
+    }
+
     private void initViewPager() {
         imageIds = new int[]{R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3};
         main_ll_dots = (LinearLayout) findViewById(R.id.main_ll_dots);
@@ -161,13 +168,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        ToastUtil.showToast(MainActivity.this,menuItem.getTitle().toString());
+                        ToastUtil.showToast(MainActivity.this, menuItem.getTitle().toString());
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
     }
-    /*
+
         @Override
         public boolean onCreateOptionsMenu(Menu menu)
         {
@@ -175,12 +182,24 @@ public class MainActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_main, menu);
             return true;
         }
-    */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
+        }
+        switch (item.getItemId()){
+            case android.R.id.home:
+                break;
+            case R.id.menu_search:
+                ToastUtil.showToast(MainActivity.this,"menu_search");
+                startActivity(new Intent(MainActivity.this,SearchActivity.class));
+                break;
+            case R.id.menu_selectcity:
+                ToastUtil.showToast(MainActivity.this, item.getTitle().toString());
+                startActivity(new Intent(MainActivity.this,CityActivity.class));
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -188,12 +207,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+
                 mDrawerLayout.closeDrawers();
                 return true;
             }
-            //弹出确定退出对话框
+            long curTims = System.currentTimeMillis();
+            //如果两次点击返回键的时间不大于2秒 弹出toast ，小于2秒退出程序
+            if (curTims - firstTime > 2000) {
+                ToastUtil.showToast(MainActivity.this, "再按一次退出程序");
+                firstTime = curTims;
+            }else {
+                // TODO Auto-generated method stub
+                Intent exit = new Intent(Intent.ACTION_MAIN);
+                //CATEGORY_HOME:This is the home activity, that is the first activity that is displayed when the device boots.
+                //Constant Value: "android.intent.category.HOME"
+
+                exit.addCategory(Intent.CATEGORY_HOME);
+                exit.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(exit);
+                System.exit(0);
+                //这里不需要执行父类的点击事件，所以直接return
+            }
+                return true;
+
+
+            /*//弹出确定退出对话框
             new AlertDialog.Builder(this)
                     .setTitle("退出")
                     .setMessage("确定退出吗？")
@@ -219,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     })
                     .show();
             //这里不需要执行父类的点击事件，所以直接return
-            return true;
+            return true;*/
         }
         //继续执行父类的其他点击事件
         return super.onKeyDown(keyCode, event);
@@ -239,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Log.e("current position =====", position + "");
+            //Log.e("current position =====", position + "");
             ImageView imageView = new ImageView(MainActivity.this);
             imageView.setImageResource(imageIds[position % imageIds.length]);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

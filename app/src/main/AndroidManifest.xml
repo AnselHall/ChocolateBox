@@ -21,11 +21,24 @@
         </activity>
         <activity
             android:name=".activity.SplashActivity"
-            android:label="@string/title_activity_guide" >
-        </activity>
+            android:label="@string/title_activity_guide" />
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_welcom" >
+            android:label="@string/title_activity_welcom" />
+        <activity
+            android:name=".activity.TestActivity"
+            android:label="@string/title_activity_welcom" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity
+            android:name=".activity.CityActivity"
+            android:label="@string/title_activity_city" >
+        </activity>
+        <activity
+            android:name=".base.BasePager"
+            android:label="@string/title_activity_base_pager" >
         </activity>
     </application>
 
